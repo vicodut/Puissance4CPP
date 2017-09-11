@@ -27,22 +27,21 @@ class Token
 		short int number = 21; //Correspond au nombre de jetons disponible en début de jeu 
 		char type = ' '; //Correspond au type de jeton ( ' ', 'x', 'o'), dépendant du numéro du joueur, par défaut, ' ')
 	public :
-		Token();
-		void playtoken(int COL);
-		void isEmpty();
+		Token();  
+		bool isEmpty(); //vérifie que le nombre de jetons n'est pas nul == le joueur peut continuer à jouer
 };
 
 class Grid
 {
 	private :
-		short int colonnes;
-		short int lignes;
-		vector<char> grille;
+		short int colonnes; //définit le nombre de colonnes, par défaut 7
+		short int lignes; //définit le nombre de lignes, par défaut 6
+		vector<char> grille; //Gère tous les emplacments de l'aire de jeu, et évite de passer par un tableau dynamique
 	public :
-		Grid(short int colonnes = 7, short int lignes = 6);
-		void raz();
-		void refresh();
-		void isFull(int COL);
+		Grid(short int colonnes = 7, short int lignes = 6); //Constructeur, avec les éléments par defauts nombre de ligne et colonne
+		void raz(); //Fonction de remise à zéro de l'aire de jeu
+		void refresh();	//Permet de rafraichir l'affichage
+		void isFull(int COL); //Vérifie si l'aire de jeu est
 };
 
 class P4
@@ -60,8 +59,6 @@ class P4
 class Player 
 {
 	private :
-	bool type;
-	token 
 	public :
 		Player(bool type);
 		virtual void play();
