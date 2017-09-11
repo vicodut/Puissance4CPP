@@ -16,6 +16,47 @@ ________________________________________________________________________________
 
 #include "p4.hpp"
 
+void menu()
+{
+	P4 JEUX;
+	Grid AIRE;
+	int comm = 0;
+	cout << "Bienvenue dans le jeu puissance 4" << endl;
+	cout << "Selectionnez une option : " << endl;
+	cout << "1: Commencer une nouvelle partie." << endl << "2: Charger une partie." << endl << "3: Quitter." <<endl;
+	cin >> comm;
+	switch(comm)
+	{
+		case 1:
+
+		AIRE.raz();
+		system("pause");
+		JEUX.display(AIRE);
+		system("pause");
+			break;
+		case 2:
+
+
+			break;
+		case 3:
+			cout << "Merci, au revoir";
+			break;
+		default :
+			menu();
+	}
+}
+
+P4::P4()
+{
+	status = "ACTIVE";
+}
+
+Token::Token()
+{
+	number = 21;
+	type = ' ';
+}
+
 bool Token::isEmpty()
 {
 	if(number <= 0)
@@ -57,12 +98,25 @@ Grid::Grid(short int COL, short int LIN)
 	grille.push_back (size);
 }
 
+Grid::Grid()
+{
+	colonnes = 7;
+	lignes = 6;
+	int size = colonnes*lignes;
+	for(int i = 0; i < 42; i++)
+	{
+		grille.push_back (' ');
+	}
+	
+}
+
 void Grid::raz()
 {
-	for(int i = 0; i <= grille.size() - 1; i++)
+	/*for(int i = 0; i < 42; i++)
 	{
-		grille[i] = ' ';
+		grille[i] = 1;
 	}
+	cout << "raz" <<endl;*/
 }
 
 bool Grid::gIsFull()
@@ -103,4 +157,36 @@ bool Grid::cIsFull(short int COL)
 	{
 		return 0;
 	}
+}
+
+void P4::display(Grid aire_de_jeu)
+{
+	int lineA = 0;
+	system("CLS");
+	for(int i = 1; i < aire_de_jeu.lignes; i++)
+	{
+		cout << i <<": ";
+		for(int j = lineA * 7; j < lineA * 7 + 7; j++)
+		{
+			cout << aire_de_jeu.grille[j];
+			cout << " ";
+		}
+		lineA++;
+		cout << endl;
+	}
+	cout << "-------------------" << endl;
+	cout <<"   1 2 3 4 5 6 7" <<endl;
+
+}
+
+void P4::start()
+{
+	Grid AIRE;
+	AIRE.raz();
+	Token JETTONP1;
+	JETTONP1.setType(0);
+	Token JETTONP2;
+	JETTONP2.setType(1);
+	Token JETTONfill;
+	JETTONfill.setNumber(1024);
 }
