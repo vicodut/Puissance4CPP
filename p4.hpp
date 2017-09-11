@@ -11,7 +11,7 @@ ________________________________________________________________________________
 |																																	|
 |																												ESME-Sudria 2017	|
 |																												Ver 0.1A			|
-------------------------------------------------------------------------------------------------------------------------------------- 
+-------------------------------------------------------------------------------------------------------------------------------------
 */
 
 #include <iostream>
@@ -21,27 +21,30 @@ ________________________________________________________________________________
 
 using namespace std;
 
-class Token 
+class Token
 {
 	private :
-		short int number = 21; //Correspond au nombre de jetons disponible en début de jeu 
-		char type = ' '; //Correspond au type de jeton ( ' ', 'x', 'o'), dépendant du numéro du joueur, par défaut, ' ')
+		short int number = 21; //Correspond au nombre de jetons disponible en début de jeu*
+		char type = ' '; //Correspond au type de jeton ( ' ', 'x', 'o'), dépendant du numéro du joueur, par défaut, ' ')*
 	public :
-		Token();  
-		bool isEmpty(); //vérifie que le nombre de jetons n'est pas nul == le joueur peut continuer à jouer
+		Token();
+		bool isEmpty(); //vérifie que le nombre de jetons n'est pas nul == le joueur peut continuer à jouer*
+		void setNumber(short int nb);
+		void setType(bool tpe);
 };
 
 class Grid
 {
 	private :
-		short int colonnes; //définit le nombre de colonnes, par défaut 7
-		short int lignes; //définit le nombre de lignes, par défaut 6
+		short int colonnes = 7; //définit le nombre de colonnes, par défaut 7
+		short int lignes = 6; //définit le nombre de lignes, par défaut 6
 		vector<char> grille; //Gère tous les emplacments de l'aire de jeu, et évite de passer par un tableau dynamique
 	public :
-		Grid(short int colonnes = 7, short int lignes = 6); //Constructeur, avec les éléments par defauts nombre de ligne et colonne
+		Grid(short int COL, short int LIN); //Constructeur, avec les éléments par defauts nombre de ligne et colonne
 		void raz(); //Fonction de remise à zéro de l'aire de jeu
-		void refresh();	//Permet de rafraichir l'affichage
-		void isFull(int COL); //Vérifie si l'aire de jeu est
+		bool gIsFull(); //Vérifie si l'aire de jeu est pleine
+		bool cIsFull(short int COL);
+		short int getSize();
 };
 
 class P4
@@ -52,11 +55,11 @@ class P4
 		P4();
 		void start();
 		void quit();
-		void display();
+		void display();//Permet de rafraichir l'affichage
 };
 
 
-class Player 
+class Player
 {
 	private :
 	public :
@@ -72,4 +75,4 @@ class PlayerHuman : public Player
 
 	public :
 		PlayerHuman();
-}
+};
