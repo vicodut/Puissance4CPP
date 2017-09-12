@@ -37,16 +37,19 @@ class Token
 class Grid
 {
 	private :
-		
+		vector<char> grille; //Gère tous les emplacments de l'aire de jeu, et évite de passer par un tableau dynamique Besoin d'un accesseur pour le passer en private
+		short int colonnes; //définit le nombre de colonnes, par défaut 7 Besoin d'un accesseur pour le passer en private
+		short int lignes; //définit le nombre de lignes, par défaut 6 Besoin d'un accesseur pour le passer en private
+		friend class P4;
+
 	public :
 		Grid();
 		Grid(short int COL, short int LIN); //Constructeur, avec les éléments par defauts nombre de ligne et colonne
-		void raz(); //Fonction de remise à zéro de l'aire de jeu
 		bool gIsFull(); //Vérifie si l'aire de jeu est pleine
 		bool cIsFull(short int COL);
-		vector<char> grille; //Gère tous les emplacments de l'aire de jeu, et évite de passer par un tableau dynamique Besoin d'un accesseur pour le passer en private
-		short int colonnes = 7; //définit le nombre de colonnes, par défaut 7 Besoin d'un accesseur pour le passer en private
-		short int lignes = 6; //définit le nombre de lignes, par défaut 6 Besoin d'un accesseur pour le passer en private
+		void setCol(int COL);
+		void setLin(int LIN);
+		void resize();
 
 };
 
@@ -57,7 +60,6 @@ class P4
 
 	public :
 		P4();
-		void start();
 		void quit();
 		void display(Grid aire_de_jeu);//Permet de rafraichir l'affichage
 };
@@ -65,17 +67,22 @@ class P4
 
 class Player
 {
-	private :
+	protected :
 	bool playerType = 0;
+	bool isActive;
 	public :
-		Player();
-
-		virtual void play();
+        Player();
+        virtual void setActive();
+        virtual void setInactive();
+        virtual void play();
 };
 
 class PlayerHuman : public Player
 {
 	private :
+	string playerName;
 	public :
-		PlayerHuman();
+	    PlayerHuman();
+		void setName(string name);
+		void setType(bool tpe);
 };
