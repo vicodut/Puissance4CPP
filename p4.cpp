@@ -16,6 +16,53 @@ ________________________________________________________________________________
 
 #include "p4.hpp"
 
+void menu()
+{
+	int tmp = 0;
+	P4 JEUX;
+	Grid AIRE;
+	int comm = 0;
+	cout << "Bienvenue dans le jeu puissance 4" << endl;
+	cout << "Selectionnez une option : " << endl;
+	cout << "1: Commencer une nouvelle partie." << endl << "2: Charger une partie." << endl << "3: Quitter." <<endl;
+	cin >> comm;
+	switch(comm)
+	{
+		case 1:
+		cout << "Entrez un nombre de colonnes :" << endl;
+		cin >> tmp;
+		AIRE.setCol(tmp);
+		cout << "Entrez un nombre de lignes :" << endl;
+		cin >> tmp;
+		AIRE.setLin(tmp);
+		AIRE.resize();
+		system("pause");
+		JEUX.display(AIRE);
+		system("pause");
+			break;
+		case 2:
+
+
+			break;
+		case 3:
+			cout << "Merci, au revoir";
+			break;
+		default :
+			menu();
+	}
+}
+
+P4::P4()
+{
+	status = "ACTIVE";
+}
+
+Token::Token()
+{
+	number = 21;
+	type = ' ';
+}
+
 bool Token::isEmpty()
 {
 	if(number <= 0)
@@ -57,11 +104,30 @@ Grid::Grid(short int COL, short int LIN)
 	grille.push_back (size);
 }
 
-void Grid::raz()
+Grid::Grid()
 {
-	for(int i = 0; i <= grille.size() - 1; i++)
+	colonnes = 1;
+	lignes = 1;
+	int size = colonnes*lignes;
+	for(int i = 0; i < colonnes * lignes ; i++)
 	{
-		grille[i] = ' ';
+		grille.push_back (' ');
+	}
+
+}
+void Grid::setCol(int COL)
+{
+	colonnes = COL;
+}
+void Grid::setLin(int LIN)
+{
+	lignes = LIN;
+}
+void Grid::resize()
+{
+	for(int i = 0; i < lignes * colonnes; i++)
+	{
+		grille.push_back (' ');
 	}
 }
 
@@ -104,3 +170,32 @@ bool Grid::cIsFull(short int COL)
 		return 0;
 	}
 }
+
+void P4::display(Grid aire_de_jeu)
+{
+	int lineA = 0;
+	system("CLS");
+	for(int i = 1; i < aire_de_jeu.lignes + 1; i++)
+	{
+		cout << i <<"| ";
+		for(int j = lineA * aire_de_jeu.colonnes; j < lineA * aire_de_jeu.colonnes + aire_de_jeu.colonnes; j++)
+		{
+			cout << aire_de_jeu.grille[j];
+			cout << " ";
+		}
+		lineA++;
+		cout << "|";
+		cout << endl;
+	}
+	for(int k = 0; k < 2 * aire_de_jeu.colonnes + 3; k++)
+	{
+		cout << "-";
+	}
+	cout << endl << "   " ;
+	for(int l = 0; l < aire_de_jeu.colonnes; l++)
+	{
+		cout << l + 1 <<" ";
+	}
+	cout << endl;
+}
+
