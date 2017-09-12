@@ -19,11 +19,12 @@ ________________________________________________________________________________
 void menu()
 {
 	string tmp1;
-	int tmp = 0;
+	short int tmp = 0;
 	P4 JEUX;
 	Grid AIRE;
 	PlayerHuman player1;
 	PlayerHuman player2;
+	PlayerHuman active;
 	int comm = 0;
 	cout << "Bienvenue dans le jeu puissance 4" << endl;
 	cout << "Selectionnez une option : " << endl;
@@ -32,11 +33,12 @@ void menu()
 	switch(comm)
 	{
 		case 1:
-		cout << "Entrez un nom pour le 1er jouer :" << endl;
+
+		cout << "Entrez un nom pour le 1er joueur :" << endl;
 		cin >> tmp1;
 		player1.setName(tmp1);
 		player1.setType(0);
-		cout << "Entrez un nom pour le 2eme jouer :" << endl;
+		cout << "Entrez un nom pour le 2eme joueur :" << endl;
 		cin >> tmp1;
 		player2.setName(tmp1);
 		player2.setType(1);
@@ -49,8 +51,13 @@ void menu()
 		AIRE.resize();
 		system("pause");
 		JEUX.display(AIRE);
-		system("pause");
-			break;
+		cout << "Entrez une colone pour jouer p1 :" << endl;
+		cin >> tmp;
+		active = player1;
+		JEUX.play(player1, player2, active ,tmp, AIRE );
+        system("pause");
+        JEUX.display(AIRE);
+        break;
 		case 2:
 
 
@@ -181,6 +188,20 @@ bool Grid::cIsFull(short int COL)
 		return 0;
 	}
 }
+short int Grid::getElem(short int COL)
+{
+    return 5;
+}
+
+/*void Grid::getCol()
+{
+
+}
+
+void Grid::getLin()
+{
+
+}*/
 
 void P4::display(Grid aire_de_jeu)
 {
@@ -228,28 +249,37 @@ void PlayerHuman::setName(string name)
 void PlayerHuman::setType(bool tpe)
 {
     playerType = tpe;
+    if(playerType == 0)
+    {
+    	tokenType = 'x';
+    }
+    else
+    {
+    	tokenType = 'o';
+    }
 }
 
-void Player::setActive()
+void P4::check()
 {
-	isActive = 1;
+
 }
 
-void Player::setInactive
+void P4::play(PlayerHuman p1, PlayerHuman p2, PlayerHuman current, short int colPlay, Grid aire_de_jeu)
 {
-	isActive = 0;
-}
-
-void Player::play(Player p1, Player p2);
-{
-	if(p1.isActive == 1 && p2.isActive == 0)
+	if( current.playerType == p1.playerType )
 	{
-		p1.setInactive();
-		p2.setActive();
+		cout << current.playerName << " joue la colonne: " << colPlay <<endl;
+		short int tmp3 = aire_de_jeu.getElem( colPlay );
+		aire_de_jeu.grille[2] = 'x';
 	}
 	else
 	{
+		current = p2;
+		cout << current.playerName << " joue la colonne: " << colPlay <<endl;
+		short int tmp3 = aire_de_jeu.getElem( colPlay );
+		aire_de_jeu.grille[2] = 'x';
 
 	}
-
+	display(aire_de_jeu);
+	system("pause");
 }
