@@ -54,8 +54,8 @@ void menu()
 		JEUX.display(&AIRE);
 		while(!AIRE.gIsFull())
 		{
-		JEUX.play(player1, &AIRE, *tokenp1);
-		JEUX.play(player2, &AIRE, *tokenp2);
+		JEUX.play(player1, &AIRE, &tokenp1);
+		JEUX.play(player2, &AIRE, &tokenp2);
 		}
 
 		cout <<"partie terminée." << endl;
@@ -84,12 +84,12 @@ Token::Token()
 
 void Token::setType(bool tpe)
 {
- type = tpe;
+	this->type = tpe;
 }
 
-char Token::getType()
+char* Token::getType()
 {
-	return type;
+	return &(this->type);
 }
 
 
@@ -138,7 +138,7 @@ bool Grid::cIsFull(short int COL)
 	int tmp = 0;
 	for(int i =  COL; i < grille.size(); i = i + colonnes)
 	{
-		if(grille[i] ==! nullptr)
+		if(grille[i] == nullptr)
 		{
 			tmp++;
 		}
@@ -177,8 +177,12 @@ void P4::display(Grid *aire_de_jeu)
 		cout << i <<"| ";
 		for(int j = lineA * aire_de_jeu->colonnes; j < lineA * aire_de_jeu->colonnes + aire_de_jeu->colonnes; j++)
 		{
-			cout << aire_de_jeu->grille[j]->type;
-			cout << " ";
+			char *type = aire_de_jeu->grille[j]->getType();
+			if (type) {
+				cout << *type;
+			} else {
+				cout << "  ";
+			}
 		}
 		lineA++;
 		cout << "|";
@@ -223,6 +227,7 @@ void P4::play(PlayerHuman p, Grid *aire_de_jeu, Token * tkn)
 	cout << "entrez une colonne a jouer pour : " << p.playerName << endl;
 	cin >> colPlay;
 	cin.ignore();
+
 
 	cout << p.playerName << " joue la colonne: " << colPlay <<endl;
 	short int tmp3 = aire_de_jeu->getElem( colPlay);
