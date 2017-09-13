@@ -18,9 +18,13 @@ ________________________________________________________________________________
 
 void menu()
 {
-	int tmp = 0;
+	string tmp1;
+	short int tmp = 0;
 	P4 JEUX;
 	Grid AIRE;
+	PlayerHuman player1;
+	PlayerHuman player2;
+	PlayerHuman active;
 	int comm = 0;
 	cout << "Bienvenue dans le jeu puissance 4" << endl;
 	cout << "Selectionnez une option : " << endl;
@@ -29,6 +33,15 @@ void menu()
 	switch(comm)
 	{
 		case 1:
+
+		cout << "Entrez un nom pour le 1er joueur :" << endl;
+		cin >> tmp1;
+		player1.setName(tmp1);
+		player1.setType(0);
+		cout << "Entrez un nom pour le 2eme joueur :" << endl;
+		cin >> tmp1;
+		player2.setName(tmp1);
+		player2.setType(1);
 		cout << "Entrez un nombre de colonnes :" << endl;
 		cin >> tmp;
 		AIRE.setCol(tmp);
@@ -38,8 +51,12 @@ void menu()
 		AIRE.resize();
 		system("pause");
 		JEUX.display(AIRE);
-		system("pause");
-			break;
+		active = player1;
+		for(int i = 0; i <= 42; i++)
+		{
+		JEUX.play(player1, player2, active, &AIRE);
+		}
+        break;
 		case 2:
 
 
@@ -170,12 +187,38 @@ bool Grid::cIsFull(short int COL)
 		return 0;
 	}
 }
+short int Grid::getElem(short int COL)
+{
+	COL -= 1;
+	while(COL <= colonnes * lignes)
+	{
+    	if(grille[colonnes + COL] == ' ')
+		{
+			COL += colonnes;
+			getElem(COL + colonnes);
+		}
+		else
+		{
+			return COL;
+		}
+	}
+}
+
+/*void Grid::getCol()
+{
+
+}
+
+void Grid::getLin()
+{
+
+}*/
 
 void P4::display(Grid aire_de_jeu)
 {
 	int lineA = 0;
 	system("CLS");
-	for(int i = 1; i < aire_de_jeu.lignes + 1; i++)
+	for(int i = aire_de_jeu.lignes; i >= 1; i--)
 	{
 		cout << i <<"| ";
 		for(int j = lineA * aire_de_jeu.colonnes; j < lineA * aire_de_jeu.colonnes + aire_de_jeu.colonnes; j++)
@@ -197,5 +240,65 @@ void P4::display(Grid aire_de_jeu)
 		cout << l + 1 <<" ";
 	}
 	cout << endl;
+}
+Player::Player()
+{
+
+}
+
+PlayerHuman::PlayerHuman()
+{
+
+}
+
+
+void PlayerHuman::setName(string name)
+{
+    playerName= name;
+}
+
+void PlayerHuman::setType(bool tpe)
+{
+    playerType = tpe;
+    if(playerType == 0)
+    {
+    	tokenType = 'x';
+    }
+    else
+    {
+    	tokenType = 'o';
+    }
+}
+
+void P4::check()
+{
+
+}
+
+void P4::play(PlayerHuman p1, PlayerHuman p2, PlayerHuman current, Grid *aire_de_jeu)
+{
+	short int colPlay = 0;
+	if( current.playerType == p1.playerType )
+	{
+		cout << "entrez une colonne a jouer pour : " << current.playerName << endl;
+		cin >> colPlay;
+		cout << current.playerName << " joue la colonne: " << colPlay <<endl;
+		short int tmp3 = aire_de_jeu->getElem( colPlay );
+		aire_de_jeu->grille[tmp3] = 'x';
+		current = p2;
+	}
+	else
+	{
+		current = p2;
+		cout << "entrez une colonne a jouer pour : " << current.playerName << endl;
+		cin >> colPlay;
+		cout << current.playerName << " joue la colonne: " << colPlay <<endl;
+		short int tmp3 = aire_de_jeu->getElem( colPlay );
+		aire_de_jeu->grille[tmp3] = 'o';
+		current = p1;
+
+	}
+	display(*aire_de_jeu);
+	system("pause");
 }
 

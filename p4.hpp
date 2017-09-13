@@ -50,7 +50,33 @@ class Grid
 		void setCol(int COL);
 		void setLin(int LIN);
 		void resize();
-		
+		short int getElem(short int COL);
+		//void getCol();
+		//void getLin();
+
+
+};
+class Player
+{
+	protected :
+	bool playerType = 0;
+	char tokenType;
+	friend class P4;
+	public :
+        Player();
+};
+
+class PlayerHuman : public Player
+{
+	protected :
+	string playerName;
+	friend class P4;
+	public :
+	    PlayerHuman();
+		void setName(string name);
+		void setType(bool tpe);
+		void setInactive();
+		void setActive();
 };
 
 class P4
@@ -62,22 +88,9 @@ class P4
 		P4();
 		void quit();
 		void display(Grid aire_de_jeu);//Permet de rafraichir l'affichage
+		void check();
+		void play(PlayerHuman p1, PlayerHuman p2, PlayerHuman current, Grid *aire_de_jeu);
 };
 
 
-class Player
-{
-	private :
-	bool playerType = 0;
-	public :
-		Player();
 
-		virtual void play();
-};
-
-class PlayerHuman : public Player
-{
-	private :
-	public :
-		PlayerHuman();
-};
