@@ -154,48 +154,57 @@ bool Grid::cIsFull(short int COL)
 }
 short int Grid::getElem(short int COL)
 {
-    	for(int i = 0; i < colonnes; i++)
-    	{
-    	if(grille[colonnes + COL] == nullptr)
-		{
-			COL += colonnes;
-		}
-		else
-		{
-			return COL;
-		}
-    	}
+    short int col = 0;
 
+    for (int i = lignes; i > 0 ; i--) {
+        col = (colonnes * i) - (lignes - COL);
+        if (grille[col - 1] == nullptr) {
+            break;
+        }
+    }
+    return col - 1;
 }
 
 void P4::display(Grid *aire_de_jeu)
 {
 	int lineA = 0;
 
-	for(int i = aire_de_jeu->lignes; i >= 1; i--)
-	{
-		cout << i <<"| ";
-		for(int j = lineA * aire_de_jeu->colonnes; j < lineA * aire_de_jeu->colonnes + aire_de_jeu->colonnes; j++)
-		{
-			char *type = aire_de_jeu->grille[j]->getType();
-			if (type) {
-				cout << *type;
-			} else {
-				cout << "  ";
-			}
-		}
-		lineA++;
-		cout << "|";
-		cout << endl;
-	}
+//	for(int i = aire_de_jeu->lignes; i >= 1; i--)
+//	{
+//		cout << i <<"| ";
+//		for(int j = lineA * aire_de_jeu->colonnes; j < lineA * aire_de_jeu->colonnes + aire_de_jeu->colonnes; j++)
+//		{
+//			char *type = aire_de_jeu->grille[j]->getType();
+//			if (type) {
+//				cout << *type;
+//			} else {
+//				cout << "  ";
+//			}
+//		}
+//		lineA++;
+//		cout << "|";
+//		cout << endl;
+//	}
+    cout << "lines " << aire_de_jeu->lignes << endl;
+    for (int i = 1; i <= aire_de_jeu->lignes * aire_de_jeu->colonnes; ++i) {
+        char *type = aire_de_jeu->grille[i - 1]->getType();
+        if (type != nullptr) {
+            cout << " " << *type << " ";
+        } else {
+            cout << " . ";
+        }
+
+        if (i%aire_de_jeu->colonnes == 0)
+            cout << endl;
+    }
 	for(int k = 0; k < 2 * aire_de_jeu->colonnes + 3; k++)
 	{
 		cout << "-";
 	}
-	cout << endl << "   " ;
+	cout << endl;
 	for(int l = 0; l < aire_de_jeu->colonnes; l++)
 	{
-		cout << l <<" ";
+		cout << l << ": ";
 	}
 	cout << endl;
 }
@@ -231,10 +240,9 @@ void P4::play(PlayerHuman p, Grid *aire_de_jeu, Token * tkn)
 
 	cout << p.playerName << " joue la colonne: " << colPlay <<endl;
 	short int tmp3 = aire_de_jeu->getElem(colPlay);
-	//cout << tmp3 << end;
 	if(aire_de_jeu->grille[tmp3] == nullptr)
 	{
-		aire_de_jeu->grille[tmp3] = tkn;
+        aire_de_jeu->grille[tmp3] = tkn;
 	}
 	else
 	{
