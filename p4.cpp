@@ -56,8 +56,8 @@ void menu()
 		JEUX.display(&AIRE);
 		while(!AIRE.gIsFull())
 		{
-		JEUX.play(player1, &AIRE, *tokenp1);
-		JEUX.play(player2, &AIRE, *tokenp2);
+		JEUX.play(player1, &AIRE, &tokenp1);
+		JEUX.play(player2, &AIRE, &tokenp2);
 		}
 
 		cout <<"partie terminée." << endl;
@@ -111,7 +111,7 @@ void Grid::resize()
 {
 	for(int i = 0; i < lignes * colonnes; i++)
 	{
-		grille.push_back (*NULL);
+		grille.push_back(nullptr);
 	}
 }
 
@@ -120,7 +120,7 @@ bool Grid::gIsFull()
 	int tmp = 0;
 	for(int i = 0; i < grille.size(); i++)
 	{
-		if(grille[i] == *NULL)
+		if(grille[i] == nullptr)
 		{
 			tmp++;
 		}
@@ -140,7 +140,7 @@ bool Grid::cIsFull(short int COL)
 	int tmp = 0;
 	for(int i =  COL; i < grille.size(); i = i + colonnes)
 	{
-		if(grille[i] ==! NULL)
+		if(grille[i] == nullptr)
 		{
 			tmp++;
 		}
@@ -158,7 +158,7 @@ short int Grid::getElem(short int COL)
 {
     	for(int i = 0; i < colonnes; i++)
     	{
-    	if(grille[colonnes + COL] == *NULL)
+    	if(grille[colonnes + COL] == nullptr)
 		{
 			COL += colonnes;
 		}
@@ -179,7 +179,7 @@ void P4::display(Grid *aire_de_jeu)
 		cout << i <<"| ";
 		for(int j = lineA * aire_de_jeu->colonnes; j < lineA * aire_de_jeu->colonnes + aire_de_jeu->colonnes; j++)
 		{
-			cout << aire_de_jeu->grille[j]->tokenType;
+			cout << aire_de_jeu->grille[j]->type;
 			cout << " ";
 		}
 		lineA++;
@@ -244,7 +244,7 @@ void P4::play(PlayerHuman p, Grid *aire_de_jeu, Token * tkn)
 
 	cout << p.playerName << " joue la colonne: " << colPlay <<endl;
 	short int tmp3 = aire_de_jeu->getElem( colPlay);
-	if(aire_de_jeu->grille[tmp3] == *NULL)
+	if(aire_de_jeu->grille[tmp3] == nullptr)
 	{
 		aire_de_jeu->grille[tmp3] = tkn;
 	}

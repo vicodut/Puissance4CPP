@@ -39,7 +39,7 @@ class Token
 class Grid
 {
 	private :
-		vector<*Token> grille; //Gère tous les emplacments de l'aire de jeu, et évite de passer par un tableau dynamique Besoin d'un accesseur pour le passer en private
+		vector<Token *> grille; //Gère tous les emplacments de l'aire de jeu, et évite de passer par un tableau dynamique Besoin d'un accesseur pour le passer en private
 		short int colonnes; //définit le nombre de colonnes, par défaut 7 Besoin d'un accesseur pour le passer en private
 		short int lignes; //définit le nombre de lignes, par défaut 6 Besoin d'un accesseur pour le passer en private
 		friend class P4;
