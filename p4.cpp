@@ -243,7 +243,7 @@ void P4::display(Grid *aire_de_jeu)
 	cout << endl << "   " ;
 	for(int l = 0; l < aire_de_jeu->colonnes; l++)
 	{
-		cout << l + 1 <<" ";
+		cout << l <<" ";
 	}
 	cout << endl;
 }
@@ -294,7 +294,7 @@ void P4::play(PlayerHuman p, Grid *aire_de_jeu)
 	cin.ignore();
 	system("pause");
 	cout << p.playerName << " joue la colonne: " << colPlay <<endl;
-	short int tmp3 = aire_de_jeu->getElem( colPlay );
+	short int tmp3 = aire_de_jeu->getElem( colPlay);
 	if(aire_de_jeu->grille[tmp3] == ' ')
 	{
 		aire_de_jeu->grille[tmp3] = p.tokenType;
