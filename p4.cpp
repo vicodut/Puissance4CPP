@@ -54,10 +54,12 @@ void menu()
 		AIRE.setLin(tmp);
 		AIRE.resize();
 		JEUX.display(&AIRE);
-		system("pause");
-		//JEUX.play(player1, &AIRE, 0);
+		while(!AIRE.gIsFull())
+		{
 		JEUX.play(player1, &AIRE);
 		JEUX.play(player2, &AIRE);
+		}
+
 		cout <<"partie terminée." << endl;
 		system("pause");
         break;
@@ -289,12 +291,11 @@ void P4::play(PlayerHuman p, Grid *aire_de_jeu)
 	short int colPlay = 0;
 	cout << "entrez une colonne a jouer pour : " << p.playerName << endl;
 	cin >> colPlay;
-	cin.get();
 	cin.ignore();
-	colPlay -= 1;
+	system("pause");
 	cout << p.playerName << " joue la colonne: " << colPlay <<endl;
 	short int tmp3 = aire_de_jeu->getElem( colPlay );
-	if(aire_de_jeu->grille[colPlay] == ' ')
+	if(aire_de_jeu->grille[tmp3] == ' ')
 	{
 		aire_de_jeu->grille[tmp3] = p.tokenType;
 	}
@@ -304,7 +305,7 @@ void P4::play(PlayerHuman p, Grid *aire_de_jeu)
 	}
 
 	display(aire_de_jeu);
-	system("pause");
+
 }
 
 void P4::play(PlayerHuman p, Grid *aire_de_jeu, const short int init)
