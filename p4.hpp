@@ -77,6 +77,7 @@ class PlayerHuman : public Player
 		void setType(bool tpe);
 		void setInactive();
 		void setActive();
+		void setTokenType(char temp);
 };
 
 class P4
@@ -87,9 +88,11 @@ class P4
 	public :
 		P4();
 		void quit();
-		void display(Grid aire_de_jeu);//Permet de rafraichir l'affichage
+		void display(Grid *aire_de_jeu);//Permet de rafraichir l'affichage
 		void check();
-		void play(PlayerHuman p1, PlayerHuman p2, PlayerHuman current, Grid *aire_de_jeu);
+		void play(PlayerHuman p, Grid *aire_de_jeu);
+		bool check(Grid aire_de_jeu);
+		void play(PlayerHuman p, Grid *aire_de_jeu, const short int init);
 };
 
 
