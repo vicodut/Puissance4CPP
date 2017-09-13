@@ -61,7 +61,6 @@ void menu()
 		}
 
 		cout <<"partie terminée." << endl;
-		system("pause");
         break;
 		case 2:
 
@@ -132,7 +131,7 @@ Grid::Grid()
 	colonnes = 1;
 	lignes = 1;
 	int size = colonnes*lignes;
-	for(int i = 0; i < colonnes * lignes ; i++)
+	for(int i = 0; i < colonnes * lignes - 1; i++)
 	{
 		grille.push_back (' ');
 	}
@@ -223,7 +222,7 @@ void Grid::getLin()
 void P4::display(Grid *aire_de_jeu)
 {
 	int lineA = 0;
-	system("CLS");
+
 	for(int i = aire_de_jeu->lignes; i >= 1; i--)
 	{
 		cout << i <<"| ";
@@ -292,7 +291,7 @@ void P4::play(PlayerHuman p, Grid *aire_de_jeu)
 	cout << "entrez une colonne a jouer pour : " << p.playerName << endl;
 	cin >> colPlay;
 	cin.ignore();
-	system("pause");
+
 	cout << p.playerName << " joue la colonne: " << colPlay <<endl;
 	short int tmp3 = aire_de_jeu->getElem( colPlay);
 	if(aire_de_jeu->grille[tmp3] == ' ')
