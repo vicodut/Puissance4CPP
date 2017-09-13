@@ -1,7 +1,7 @@
 /*
 _____________________________________________________________________________________________________________________________________
 |																																	|
-|													Puissance 4 C++ Groupe    INFO3													|
+|													Puissance 4 C++ Groupe 1  INFO3													|
 |																																	|
 |															Herbin Armelle															|
 |															Laporte Nathan															|
@@ -10,7 +10,7 @@ ________________________________________________________________________________
 |																																	|
 |																																	|
 |																												ESME-Sudria 2017	|
-|																												Ver 0.1A			|
+|				 																								Ver 0.1A			|
 -------------------------------------------------------------------------------------------------------------------------------------
 */
 
@@ -125,11 +125,11 @@ bool Grid::gIsFull()
 	}
 	if(tmp == 0)
 	{
-		return 1;
+		return true;
 	}
 	else
 	{
-		return 0;
+		return false;
 	}
 }
 
@@ -143,13 +143,13 @@ bool Grid::cIsFull(short int COL)
 			tmp++;
 		}
 	}
-	if(tmp == lignes)
+	if(tmp == 0)
 	{
-		return 1;
+		return true;
 	}
 	else
 	{
-		return 0;
+		return false;
 	}
 }
 short int Grid::getElem(short int COL)
