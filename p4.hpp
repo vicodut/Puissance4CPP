@@ -28,26 +28,24 @@ void menu();
 class Token
 {
 	private :
-		short int number; //Correspond au nombre de jetons disponible en début de jeu*
 		char type; //Correspond au type de jeton ( ' ', 'x', 'o'), dépendant du numéro du joueur, par défaut, ' ')*
+		friend class P4;
 	public :
 		Token();
-		bool isEmpty(); //vérifie que le nombre de jetons n'est pas nul == le joueur peut continuer à jouer*
-		void setNumber(short int nb);
 		void setType(bool tpe);
+		char getType();
 };
 
 class Grid
 {
 	private :
-		vector<char> grille; //Gère tous les emplacments de l'aire de jeu, et évite de passer par un tableau dynamique Besoin d'un accesseur pour le passer en private
+		vector<Token*> grille; //Gère tous les emplacments de l'aire de jeu, et évite de passer par un tableau dynamique Besoin d'un accesseur pour le passer en private
 		short int colonnes; //définit le nombre de colonnes, par défaut 7 Besoin d'un accesseur pour le passer en private
 		short int lignes; //définit le nombre de lignes, par défaut 6 Besoin d'un accesseur pour le passer en private
 		friend class P4;
 
 	public :
 		Grid();
-		Grid(short int COL, short int LIN); //Constructeur, avec les éléments par defauts nombre de ligne et colonne
 		bool gIsFull(); //Vérifie si l'aire de jeu est pleine
 		bool cIsFull(short int COL);
 		void setCol(int COL);
@@ -62,8 +60,6 @@ class Grid
 class Player
 {
 	protected :
-	bool playerType = 0;
-	char tokenType;
 	friend class P4;
 	public :
         Player();
@@ -77,25 +73,19 @@ class PlayerHuman : public Player
 	public :
 	    PlayerHuman();
 		void setName(string name);
-		void setType(bool tpe);
-		void setInactive();
-		void setActive();
-		void setTokenType(char temp);
 };
 
 class P4
 {
 	private :
-	string status;
 
 	public :
 		P4();
 		void quit();
 		void display(Grid *aire_de_jeu);//Permet de rafraichir l'affichage
 		void check();
-		void play(PlayerHuman p, Grid *aire_de_jeu);
+		void play(PlayerHuman p, Grid *aire_de_jeu, Token * tkn);
 		bool check(Grid aire_de_jeu);
-		void play(PlayerHuman p, Grid *aire_de_jeu, const short int init);
 };
 
 

@@ -22,12 +22,12 @@ void menu()
 	short int tmp = 0;
 	P4 JEUX;
 	Grid AIRE;
-	//PlayerHuman playerInit;
-	//playerInit.setTokenType('x');
 	PlayerHuman player1;
-	player1.setTokenType('x');
+	Token tokenp1;
+	tokenp1.setType('x');
 	PlayerHuman player2;
-	player2.setTokenType('y');
+	Token tokenp2;
+	tokenp2.setType('o');
 	int comm = 0;
 	cout << "Bienvenue dans le jeu puissance 4" << endl;
 	cout << "Selectionnez une option : " << endl;
@@ -40,11 +40,9 @@ void menu()
 		cout << "Entrez un nom pour le 1er joueur :" << endl;
 		cin >> tmp1;
 		player1.setName(tmp1);
-		player1.setType(0);
 		cout << "Entrez un nom pour le 2eme joueur :" << endl;
 		cin >> tmp1;
 		player2.setName(tmp1);
-		player2.setType(1);
 		cout << "Entrez un nombre de colonnes :" << endl;
 		cin >> tmp;
 		AIRE.setCol(tmp);
@@ -56,8 +54,8 @@ void menu()
 		JEUX.display(&AIRE);
 		while(!AIRE.gIsFull())
 		{
-		JEUX.play(player1, &AIRE);
-		JEUX.play(player2, &AIRE);
+		JEUX.play(player1, &AIRE, *tokenp1);
+		JEUX.play(player2, &AIRE, *tokenp2);
 		}
 
 		cout <<"partie terminée." << endl;
@@ -76,65 +74,27 @@ void menu()
 
 P4::P4()
 {
-	status = "ACTIVE";
 }
 
 Token::Token()
 {
-	number = 21;
-	type = ' ';
+
 }
 
-bool Token::isEmpty()
-{
-	if(number <= 0)
-	{
-		return 1;
-	}
-	else
-	{
-		return 0;
-	}
-}
-
-void Token::setNumber(short int nb)
-{
-	number = nb;
-}
 
 void Token::setType(bool tpe)
 {
-	if(tpe == 0)
-	{
-		type = 'x';
-	}
-	else if (tpe == 1)
-	{
-		type = 'o';
-	}
-	else
-	{
-		cout << "Erreur, trop de joueurs" << endl;
-	}
+ type = tpe;
 }
 
-Grid::Grid(short int COL, short int LIN)
+char Token::getType()
 {
-	colonnes = COL;
-	lignes = LIN;
-	int size = COL*LIN;
-	grille.push_back (size);
+	return type;
 }
+
 
 Grid::Grid()
 {
-	colonnes = 1;
-	lignes = 1;
-	int size = colonnes*lignes;
-	for(int i = 0; i < colonnes * lignes - 1; i++)
-	{
-		grille.push_back (' ');
-	}
 
 }
 void Grid::setCol(int COL)
@@ -149,7 +109,7 @@ void Grid::resize()
 {
 	for(int i = 0; i < lignes * colonnes; i++)
 	{
-		grille.push_back (' ');
+		grille.push_back (nullptr);
 	}
 }
 
@@ -158,12 +118,12 @@ bool Grid::gIsFull()
 	int tmp = 0;
 	for(int i = 0; i < grille.size(); i++)
 	{
-		if(grille[i] == 'x' || grille[i] == 'o')
+		if(grille[i] == nullptr)
 		{
 			tmp++;
 		}
 	}
-	if(tmp == grille.size())
+	if(tmp == 0)
 	{
 		return 1;
 	}
@@ -178,7 +138,7 @@ bool Grid::cIsFull(short int COL)
 	int tmp = 0;
 	for(int i =  COL; i < grille.size(); i = i + colonnes)
 	{
-		if(grille[i] == 'x' || grille[i] == 'o')
+		if(grille[i] ==! nullptr)
 		{
 			tmp++;
 		}
@@ -196,10 +156,9 @@ short int Grid::getElem(short int COL)
 {
     	for(int i = 0; i < colonnes; i++)
     	{
-    	if(grille[colonnes + COL] == ' ')
+    	if(grille[colonnes + COL] == nullptr)
 		{
 			COL += colonnes;
-			//getElem(COL + colonnes);
 		}
 		else
 		{
@@ -208,16 +167,6 @@ short int Grid::getElem(short int COL)
     	}
 
 }
-
-/*void Grid::getCol()
-{
-
-}
-
-void Grid::getLin()
-{
-
-}*/
 
 void P4::display(Grid *aire_de_jeu)
 {
@@ -228,7 +177,7 @@ void P4::display(Grid *aire_de_jeu)
 		cout << i <<"| ";
 		for(int j = lineA * aire_de_jeu->colonnes; j < lineA * aire_de_jeu->colonnes + aire_de_jeu->colonnes; j++)
 		{
-			cout << aire_de_jeu->grille[j];
+			cout << aire_de_jeu->grille[j]->type;
 			cout << " ";
 		}
 		lineA++;
@@ -262,30 +211,13 @@ void PlayerHuman::setName(string name)
     playerName= name;
 }
 
-void PlayerHuman::setType(bool tpe)
-{
-    playerType = tpe;
-    if(playerType == 0)
-    {
-    	tokenType = 'x';
-    }
-    else
-    {
-    	tokenType = 'o';
-    }
-}
-
-void PlayerHuman::setTokenType(char temp)
-{
-	tokenType = temp;
-}
 
 void P4::check()
 {
 
 }
 
-void P4::play(PlayerHuman p, Grid *aire_de_jeu)
+void P4::play(PlayerHuman p, Grid *aire_de_jeu, Token * tkn)
 {
 	short int colPlay = 0;
 	cout << "entrez une colonne a jouer pour : " << p.playerName << endl;
@@ -294,9 +226,9 @@ void P4::play(PlayerHuman p, Grid *aire_de_jeu)
 
 	cout << p.playerName << " joue la colonne: " << colPlay <<endl;
 	short int tmp3 = aire_de_jeu->getElem( colPlay);
-	if(aire_de_jeu->grille[tmp3] == ' ')
+	if(aire_de_jeu->grille[tmp3] == nullptr)
 	{
-		aire_de_jeu->grille[tmp3] = p.tokenType;
+		aire_de_jeu->grille[tmp3] = tkn;
 	}
 	else
 	{
@@ -306,10 +238,3 @@ void P4::play(PlayerHuman p, Grid *aire_de_jeu)
 	display(aire_de_jeu);
 
 }
-
-void P4::play(PlayerHuman p, Grid *aire_de_jeu, const short int init)
-{
-	aire_de_jeu->grille[init] = p.tokenType;
-	display(aire_de_jeu);
-}
-
