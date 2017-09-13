@@ -82,7 +82,7 @@ Token::Token()
 }
 
 
-void Token::setType(bool tpe)
+void Token::setType(char tpe)
 {
 	this->type = tpe;
 }
@@ -230,7 +230,8 @@ void P4::play(PlayerHuman p, Grid *aire_de_jeu, Token * tkn)
 
 
 	cout << p.playerName << " joue la colonne: " << colPlay <<endl;
-	short int tmp3 = aire_de_jeu->getElem( colPlay);
+	short int tmp3 = aire_de_jeu->getElem(colPlay);
+	//cout << tmp3 << end;
 	if(aire_de_jeu->grille[tmp3] == nullptr)
 	{
 		aire_de_jeu->grille[tmp3] = tkn;

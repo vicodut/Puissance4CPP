@@ -31,7 +31,7 @@ class Token
 		friend class P4;
 	public :
 		Token();
-		void setType(bool tpe);
+		void setType(char tpe);
 		char* getType();
 };
 
